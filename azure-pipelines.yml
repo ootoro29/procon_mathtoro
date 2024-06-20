@@ -6,6 +6,12 @@
 trigger:
 - main
 
+variables:
+  azureSubscription: 'Azure for Students'
+  webAppName: 'ootoro-app'
+  environmentName: 'Production'
+  vmImageName: 'ubuntu-latest'
+
 pool:
   vmImage: ubuntu-latest
 
