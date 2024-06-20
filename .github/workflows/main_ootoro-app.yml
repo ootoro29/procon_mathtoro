@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - ootoro-app
+name: Build and deploy Node.js app to Azure Web App - ootoro-app-db
 
 on:
   push:
@@ -27,16 +27,8 @@ jobs:
           npm run build --if-present
           npm run test --if-present
 
-      - name: Copy artifact for deployment job
-        run: |
-          mkdir deploy
-          cp -r ./.next/standalone/. ./deploy
-          cp -r ./public ./deploy
-          cp -r ./prisma ./deploy
-          cp -r ./.next/static/. ./deploy/.next/static
-
       - name: Zip artifact for deployment
-        run: zip release.zip ./deploy  -r
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -65,15 +57,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AB527829126743D5B9F0BB5C115EB51B }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5A429B01C91E49229F222F4F2C732F0D }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DDD2AB082A7A408D8C20841F61FB4F38 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_003F7126AFF24B8CA33193898D632423 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F7D091B9978E427AA3277884CE6E259B }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DC177E56840247E389E86DC233CA49AF }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ootoro-app'
+          app-name: 'ootoro-app-db'
           slot-name: 'Production'
-          package: ./deploy
+          package: .
           
