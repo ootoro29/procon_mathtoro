@@ -57,11 +57,9 @@ CREATE TABLE groups
   PRIMARY KEY (id)
 );
 
-CREATE TABLE group_menber
+CREATE TABLE group_member
 (
   id SERIAL,
-  name VARCHAR(255) NOT NULL,
-  image TEXT,
   "group_id" INTEGER NOT NULL,
   "user_id" INTEGER NOT NULL,
   PRIMARY KEY (id)
