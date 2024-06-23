@@ -5,11 +5,11 @@ export default async function Home() {
   const session = await auth();
   if(!session){
     return (
-      <Top.TopPageSignIn></Top.TopPageSignIn>
+      <Top.TopPage></Top.TopPage>
     );
   }else{
     return (
-      <Top.TopPageSignOut></Top.TopPageSignOut>
+      <Top.TopPageLoggedIn></Top.TopPageLoggedIn>
     );
   }
 }

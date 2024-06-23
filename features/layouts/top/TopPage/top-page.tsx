@@ -1,6 +1,6 @@
 import { auth, signIn } from "@/lib/auth";
 
-export default async function TopPageSignIn() {
+export default async function TopPage() {
     const session = await auth();
     return(
         <div>

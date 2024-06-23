@@ -1,4 +1,4 @@
-import TopPageSignIn from "./TopPageSignin/top-page-signin";
-import TopPageSignOut from "./TopPageSignout/top-page-signout";
+import TopPage from "./TopPage/top-page";
+import TopPageLoggedIn from "./TopPageLoggedIn/top-page-logged-in";
 
-export default {TopPageSignIn,TopPageSignOut};
+export default {TopPage,TopPageLoggedIn};
