@@ -8,11 +8,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async(res:NextResponse,req:NextRequest) => {
     
     const session = await auth();
-    console.log(session);
-    
-    //if(!session)return new NextResponse(JSON.stringify("認証エラー"),{status:401});        
+    if(!session || !session.user)return new NextResponse(JSON.stringify("認証エラー"),{status:401});        
+
     try {
-        const groups_find_values = [1];
+        const groups_find_values = [session.user.id];
         const rows = await pool.query(`
                 SELECT * 
                     FROM groups 
