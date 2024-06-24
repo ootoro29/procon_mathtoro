@@ -1,17 +1,18 @@
-import { auth, signOut } from "@/lib/auth";
+"use client"
+import { useSession,signOut } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default async function TopPageLoggedIn() {
-    const session = await auth();
+export default function HomePage() {
+    const {data:session,status} = useSession();
+    const router = useRouter();
     return(
         <div>
             <p>Top Page</p>
-            <form action={async() => {
-                "use server";
-                await signOut();
-            }}>
-                <button>サインアウト</button>
-            </form>
+            <button onClick={() => {
+                signOut();
+                router.push("/");
+            }}>サインアウト</button>
             <p>{JSON.stringify(session,null,2)}</p>
             <Link href={"/group/newgroup"}><button>グループ作成</button></Link>
             <Link href={"/#"}><button>グループチャット入場</button></Link>

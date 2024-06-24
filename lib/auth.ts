@@ -1,9 +1,9 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google"
 import { pool } from "./db";
 import PostgresAdapter from "@auth/pg-adapter";
 
-export const NAuth = NextAuth({
+export const authOptions:NextAuthConfig = {
     adapter: PostgresAdapter(pool),
     providers:[Google({
         clientId:process.env.AUTH_GOOGLE_ID,
@@ -26,11 +26,14 @@ export const NAuth = NextAuth({
                 console.log(err);
             }
         },
-        jwt({token,trigger,session}) {
-            if(trigger === "update") token.name = session.user.name;
+        jwt({token,user}) {
+            if(user){
+                token.id = user.id
+            }
             return token;
         }
     }
-})
+};
+export const NAuth = NextAuth(authOptions)
 
 export const {handlers,auth,signIn,signOut} = NAuth;

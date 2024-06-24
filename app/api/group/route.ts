@@ -1,16 +1,19 @@
 import { auth } from "@/lib/auth";
 import { pool } from "@/lib/db";
 import { Group } from "@/types";
+import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async() => {
 
+export const GET = async(res:NextResponse,req:NextRequest) => {
+    
+    const session = await auth();
+    console.log(session);
+    
+    //if(!session)return new NextResponse(JSON.stringify("認証エラー"),{status:401});        
     try {
-        const session = await auth();    
-        if(!session)return new NextResponse(JSON.stringify("認証エラー"),{status:500});        
-        const groups_find_values = [session.user?.id];
-        const rows = await pool.query(
-            `
+        const groups_find_values = [1];
+        const rows = await pool.query(`
                 SELECT * 
                     FROM groups 
                     WHERE EXISTS (
