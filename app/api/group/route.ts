@@ -6,7 +6,21 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async() => {
 
     try {
-        const rows = await pool.query('SELECT * FROM groups'); 
+        const session = await auth();    
+        if(!session)return new NextResponse(JSON.stringify("認証エラー"),{status:500});        
+        const groups_find_values = [session.user?.id];
+        const rows = await pool.query(
+            `
+                SELECT * 
+                    FROM groups 
+                    WHERE EXISTS (
+                        SELECT *
+                        FROM group_member
+                        WHERE user_id = $1 AND group_id = groups.id
+                    )
+            `,
+            groups_find_values
+        ); 
         return new NextResponse(JSON.stringify(rows.rows),{status:200});
     } catch (error) {
         return new NextResponse(JSON.stringify(error),{status:500});
