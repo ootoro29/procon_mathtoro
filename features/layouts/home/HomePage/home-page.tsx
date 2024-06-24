@@ -1,9 +1,16 @@
 "use client"
+import { Group } from "@/types";
 import { useSession,signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function HomePage() {
+export default function HomePage(
+    {
+        groups
+    }:{
+        groups:Group[]
+    }
+) {
     const {data:session,status} = useSession();
     const router = useRouter();
     return(
@@ -16,6 +23,14 @@ export default function HomePage() {
             <p>{JSON.stringify(session,null,2)}</p>
             <Link href={"/group/newgroup"}><button>グループ作成</button></Link>
             <Link href={"/#"}><button>グループチャット入場</button></Link>
+            <p>グループ一覧</p>
+            {
+                groups.map((group,i) => (
+                    <div key = {i}>
+                        <p>{group.name}</p>
+                    </div>
+                ))
+            }
             <Link href={"/#"}><button>コミュニティ入場</button></Link>
         </div>
     );    
