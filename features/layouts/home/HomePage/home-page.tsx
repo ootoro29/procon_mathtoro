@@ -28,6 +28,7 @@ export default function HomePage(
                 groups.map((group,i) => (
                     <div key = {i}>
                         <p>{group.name}</p>
+                        <Link href={`/group/${group.id}`}><button>入場</button></Link>
                     </div>
                 ))
             }

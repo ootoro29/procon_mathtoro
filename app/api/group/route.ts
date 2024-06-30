@@ -17,8 +17,8 @@ export const GET = async(res:NextResponse,req:NextRequest) => {
                     FROM groups 
                     WHERE EXISTS (
                         SELECT *
-                        FROM group_member
-                        WHERE user_id = $1 AND group_id = groups.id
+                            FROM group_member
+                            WHERE user_id = $1 AND group_id = groups.id
                     )
             `,
             groups_find_values

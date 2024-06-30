@@ -11,10 +11,16 @@ export default function HomePage(){
     useEffect(() => {
         const dataFetch = async() => {
             const res = await fetch("/api/group");
-            const data = await res.json() as Group[];
-            setGroups((prev) => {
-                return [...prev,...data];
-            });
+            const datas = await res.json() as Group[];
+            datas.map((data) => {
+              setGroups((prev) => {
+                  if(prev.findIndex((v) => v.id == data.id) == -1){
+                    return [...prev,data];
+                  } else{
+                    return [...prev];
+                  }
+              });
+            })
         }
         dataFetch();
     },[]);

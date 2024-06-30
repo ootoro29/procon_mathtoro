@@ -63,7 +63,29 @@ CREATE TABLE group_member
   "group_id" INTEGER NOT NULL,
   "user_id" INTEGER NOT NULL,
   PRIMARY KEY (id)
+  FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE rooms
+(
+  id SERIAL,
+  name VARCHAR(255),
+  image TEXT,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE group_room
+(
+  id SERIAL,
+  "group_id" INTEGER NOT NULL,
+  "room_id" INTEGER NOT NULL,
+  PRIMARY KEY (id)
+  FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+  FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
+);
+
+
  
 CREATE UNIQUE INDEX id
   ON users(id);
